@@ -1,4 +1,6 @@
 function! bufferize#Run(cmd)
+  let output = ''
+
   " Execute the command and get its output
   let cmd = a:cmd
   redir => output
