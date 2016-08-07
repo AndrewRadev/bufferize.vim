@@ -1,0 +1,57 @@
+*bufferize.txt*	TODO
+
+==============================================================================
+CONTENTS                                        *bufferize*   *bufferize-contents*
+
+    Installation................................: |bufferize-installation|
+    Usage.......................................: |bufferize-usage|
+    Settings....................................: |bufferize-settings|
+    Internals...................................: |bufferize-internals|
+    Issues......................................: |bufferize-issues|
+
+
+==============================================================================
+INSTALLATION                                            *bufferize-installation*
+
+There are several ways to install the plugin. The recommended one is by using
+Tim Pope's pathogen (http://www.vim.org/scripts/script.php?script_id=2332). In
+that case, you can clone the plugin's git repository like so:
+>
+    git clone git://github.com/AndrewRadev/bufferize.vim.git ~/.vim/bundle/bufferize
+<
+If your vim configuration is under git version control, you could also set up
+the repository as a submodule, which would allow you to update more easily.
+The command is (provided you're in ~/.vim):
+>
+    git submodule add git://github.com/AndrewRadev/bufferize.vim.git bundle/bufferize
+<
+
+Another way is to simply copy all the essential directories inside the ~/.vim
+directory: TODO list of directories
+
+
+==============================================================================
+USAGE                                                          *bufferize-usage*
+
+TODO
+
+
+==============================================================================
+SETTINGS                                                    *bufferize-settings*
+
+TODO
+
+
+==============================================================================
+INTERNALS                                                  *bufferize-internals*
+
+TODO
+
+==============================================================================
+ISSUES                                                        *bufferize-issues*
+
+Any issues and suggestions are very welcome on the github bugtracker:
+https://github.com/AndrewRadev/bufferize.vim/issues
+
+
+vim:tw=78:sw=4:ft=help:norl:
