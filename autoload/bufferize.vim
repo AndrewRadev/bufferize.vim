@@ -28,11 +28,11 @@ function! bufferize#Run(cmd)
     setlocal nowrap
     setlocal nonumber
     setlocal buftype=nofile
+    exe 'file Bufferize:\ '.escape(a:cmd, ' ')
     let saved_view = winsaveview()
   endif
 
-  " Set the filename and fill the buffer with the command's output
-  exe 'file Bufferize:\ '.escape(a:cmd, ' ')
+  " Fill the buffer with the command's output
   call setline(1, split(output, "\n"))
   set nomodified
   call winrestview(saved_view)
