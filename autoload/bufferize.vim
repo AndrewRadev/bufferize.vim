@@ -46,9 +46,9 @@ function! bufferize#Run(cmd)
 endfunction
 
 function! bufferize#RunWithTimer(args)
-  if !has('timers')
+  if !has('timers') || !has('lambda')
     echohl WarningMsg |
-          \ echomsg "BufferizeTimer can only be used with a Vim that has +timers" |
+          \ echomsg "BufferizeTimer can only be used with a Vim that has +timers and +lambda" |
           \ echohl None
     return
   endif
