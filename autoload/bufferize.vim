@@ -27,7 +27,9 @@ function! bufferize#Run(cmd)
     new
     setlocal nowrap
     setlocal nonumber
+    setlocal noswapfile
     setlocal buftype=nofile
+    setlocal bufhidden=delete
     exe 'file Bufferize:\ '.escape(a:cmd, ' ')
     let saved_view = winsaveview()
   endif
