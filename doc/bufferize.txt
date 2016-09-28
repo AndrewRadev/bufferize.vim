@@ -62,10 +62,10 @@ To get a listing of the function in a buffer and explore its source code.
 
                                                                *:BufferizeTimer*
 
-If you have a recent enough Vim that has |+timers| and |+lambda| (Vim 8 will do,
-but you can even use 7.4 with any of the later patches), you can also run the
-|:BufferizeTimer| command, which will do the same thing, but will also
-auto-update the buffer with the contents in the provided interval. For
+If you have a recent enough Vim that has |+timers| and |+lambda| (Vim 8 will
+do, but you can even use 7.4 with any of the later patches), you can also run
+the |:BufferizeTimer| command, which will do the same thing, but will also
+auto-update the buffer with the contents in the provided time interval. For
 instance:
 >
     BufferizeTimer 500 messages
