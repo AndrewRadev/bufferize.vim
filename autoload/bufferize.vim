@@ -24,7 +24,7 @@ function! bufferize#Run(cmd)
     silent normal! gg0dG
   else
     " Create a new buffer
-    new
+    execute g:bufferize_command
     setlocal nowrap
     setlocal nonumber
     setlocal noswapfile

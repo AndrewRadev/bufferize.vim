@@ -2,6 +2,10 @@ if exists('g:loaded_bufferize') || &cp
   finish
 endif
 
+if !exists('g:bufferize_command')
+  let g:bufferize_command = 'new'
+endif
+
 let g:loaded_bufferize = '0.0.1' " version number
 let s:keepcpo = &cpo
 set cpo&vim
