@@ -6,7 +6,6 @@ CONTENTS                                        *bufferize*   *bufferize-content
     Installation................................: |bufferize-installation|
     Usage.......................................: |bufferize-usage|
     Settings....................................: |bufferize-settings|
-    Internals...................................: |bufferize-internals|
     Issues......................................: |bufferize-issues|
 
 
@@ -72,6 +71,19 @@ instance:
 <
 This will run the |:messages| command every 500ms and update its output in
 the bufferize buffer.
+
+==============================================================================
+SETTINGS                                                    *bufferize-settings*
+
+                                                           *g:bufferize_command*
+>
+    let g:bufferize_command = 'tabnew'
+<
+Default value: "new"
+
+The command to use when opening a new bufferize buffer. By default, the plugin
+opens a split with "new", but you can also use, for instance, "tabnew" to open
+it in a new tab, or add modifiers like |:rightbelow| or |:vertical|.
 
 
 ==============================================================================
