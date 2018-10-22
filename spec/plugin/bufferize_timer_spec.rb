@@ -20,6 +20,7 @@ describe ":BufferizeTimer" do
     expect(output).to include 'test1.txt'
     expect(output).not_to include 'test2.txt'
 
+    sleep 0.5
     # after 500ms, both:
     output = buffer_contents('Bufferize: ls')
     expect(output).to include 'test1.txt'

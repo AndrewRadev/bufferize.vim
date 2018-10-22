@@ -30,7 +30,7 @@ function! bufferize#Run(cmd)
     setlocal noswapfile
     setlocal buftype=nofile
     setlocal bufhidden=delete
-    exe 'file Bufferize:\ '.escape(a:cmd, ' ')
+    exe 'file Bufferize:\ '.escape(a:cmd, ' |\')
     let saved_view = winsaveview()
   endif
 
@@ -74,7 +74,7 @@ endfunction
 
 function! bufferize#Bufnr(command)
   for bufnr in tabpagebuflist()
-    if bufname(bufnr) =~ 'Bufferize: '.a:command
+    if bufname(bufnr) ==# 'Bufferize: '.a:command
       return bufnr
       break
     endif
