@@ -41,9 +41,8 @@ function! bufferize#Run(cmd)
   if cursor_at_last_line
     silent normal! G
   endif
-  if exists(':RunCommand')
-    exe 'RunCommand silent Bufferize '.a:cmd
-  endif
+  set filetype=bufferize
+  let b:bufferize_source_command = a:cmd
   exe bufwinnr(current_buffer).'wincmd w'
 endfunction
 

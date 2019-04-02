@@ -35,6 +35,17 @@ BufferizeTimer 500 messages
 
 This will run the `:messages` command every 500ms and update its output in the bufferize buffer.
 
+### b:bufferize_source_command
+
+If you'd like to customize something in the bufferize buffer, you can hook into the filetype `bufferize`.
+
+The buffer will also hold the variable `b:bufferize_source_command` which is the source command that generated this output. For instance, you could define a command to regenerate the buffer like so:
+
+``` vim
+autocmd FileType bufferize
+      \ command! -buffer Rerun exe 'Bufferize '.b:bufferize_source_command
+```
+
 ## Contributing
 
 Pull requests are welcome, but take a look at [CONTRIBUTING.md](https://github.com/AndrewRadev/bufferize.vim/blob/master/CONTRIBUTING.md) first for some guidelines.
