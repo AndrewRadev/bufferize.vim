@@ -20,7 +20,17 @@ function! bufferize#Run(cmd)
       " it was the last line, so let's follow it
       let cursor_at_last_line = 1
     endif
-    exe bufwinnr(bufferize_bufnr).'wincmd w'
+
+    let bufinfo = getbufinfo(bufferize_bufnr)
+    if len(bufinfo) >= 1 && bufinfo[0].hidden
+      " exists, but is hidden, we need to make space for it and unhide it
+      execute g:bufferize_command
+      exe bufferize_bufnr.'buffer'
+    else
+      " we can switch to it
+      exe bufwinnr(bufferize_bufnr).'wincmd w'
+    endif
+
     silent normal! gg0dG
   else
     " Create a new buffer
@@ -29,7 +39,13 @@ function! bufferize#Run(cmd)
     setlocal nonumber
     setlocal noswapfile
     setlocal buftype=nofile
-    setlocal bufhidden=delete
+
+    if g:bufferize_keep_buffers
+      setlocal bufhidden=hide
+    else
+      setlocal bufhidden=delete
+    endif
+
     exe 'file Bufferize:\ '.escape(a:cmd, ' |\')
     let saved_view = winsaveview()
   endif
@@ -72,7 +88,7 @@ function! bufferize#RunWithTimer(args)
 endfunction
 
 function! bufferize#Bufnr(command)
-  for bufnr in tabpagebuflist()
+  for bufnr in range(1, bufnr('$'))
     if bufname(bufnr) ==# 'Bufferize: '.a:command
       return bufnr
       break
