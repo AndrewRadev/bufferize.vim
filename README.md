@@ -1,3 +1,5 @@
+[![GitHub version](https://badge.fury.io/gh/andrewradev%2Fbufferize.vim.svg)](https://badge.fury.io/gh/andrewradev%2Fbufferize.vim)
+
 ## Usage
 
 The plugin exposes the `:Bufferize` command, which runs the given command and shows its output in a temporary buffer. For example:
