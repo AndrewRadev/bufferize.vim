@@ -31,7 +31,7 @@ function! bufferize#Run(cmd)
       exe bufwinnr(bufferize_bufnr).'wincmd w'
     endif
 
-    silent normal! gg0dG
+    silent normal! gg0"_dG
   else
     " Create a new buffer
     execute g:bufferize_command
