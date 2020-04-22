@@ -15,6 +15,7 @@ if !exists('g:bufferize_keep_buffers')
 endif
 
 command! -nargs=* -complete=command Bufferize call bufferize#Run(<q-args>)
+command! -nargs=* -complete=command BufferizeSystem Bufferize echo system(<q-args>)
 command! -nargs=* -complete=command BufferizeTimer call bufferize#RunWithTimer(<q-args>)
 
 let &cpo = s:keepcpo

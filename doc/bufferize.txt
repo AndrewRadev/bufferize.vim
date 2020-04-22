@@ -72,6 +72,18 @@ instance:
 This will run the |:messages| command every 500ms and update its output in
 the bufferize buffer.
 
+                                                              *:BufferizeSystem*
+
+If you'd like to run an external command and get its output, just running
+`Bufferize !command` might not produce good output because of the way Vim
+buffers output in this situation.
+
+For that case, use the |:BufferizeSystem| command:
+>
+    BufferizeSystem man sudoers
+<
+This will wrap the command in a |system()| call.
+
                                                     *b:bufferize_source_command*
 
 If you'd like to customize something in the bufferize buffer, you can hook

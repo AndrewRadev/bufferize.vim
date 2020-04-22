@@ -46,7 +46,7 @@ function! bufferize#Run(cmd)
       setlocal bufhidden=delete
     endif
 
-    exe 'file Bufferize:\ '.escape(a:cmd, ' |\')
+    exe 'file Bufferize:\ '.escape(a:cmd, ' |\"')
     let saved_view = winsaveview()
   endif
 
