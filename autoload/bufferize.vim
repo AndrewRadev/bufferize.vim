@@ -1,4 +1,5 @@
 function! bufferize#Run(cmd)
+  let existing_lines = []
   let output = ''
 
   " Execute the command and get its output
@@ -14,6 +15,7 @@ function! bufferize#Run(cmd)
   let cursor_at_last_line = 0
 
   if bufferize_bufnr > 0
+    let existing_lines = getbufline(bufferize_bufnr, 1, '$')
     " There's an existing buffer, save the cursor position, but clear it out
     let saved_view = winsaveview()
     if line('.') == line('$')
@@ -30,8 +32,6 @@ function! bufferize#Run(cmd)
       " we can switch to it
       exe bufwinnr(bufferize_bufnr).'wincmd w'
     endif
-
-    silent normal! gg0"_dG
   else
     " Create a new buffer
     execute g:bufferize_command
@@ -50,8 +50,16 @@ function! bufferize#Run(cmd)
     let saved_view = winsaveview()
   endif
 
-  " Fill the buffer with the command's output
-  call setline(1, split(output, "\n"))
+  " Fill the buffer with the command's output, if the contents have changed
+  let output_lines = split(output, "\n")
+
+  if existing_lines == output_lines
+    " No change, let's not touch it
+    return
+  endif
+
+  silent normal! gg0"_dG
+  call setline(1, output_lines)
   set nomodified
   call winrestview(saved_view)
   if cursor_at_last_line
