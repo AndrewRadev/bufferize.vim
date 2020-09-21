@@ -9,65 +9,69 @@ function! bufferize#Run(cmd)
   redir END
 
   " Find an existing Bufferize buffer
-  let bufferize_bufnr = bufferize#Bufnr(a:cmd)
-  let current_buffer = bufnr('%')
-
+  let bufferize_bufnr     = bufferize#Bufnr(a:cmd)
   let cursor_at_last_line = 0
+  let current_buffer      = bufnr('%')
 
-  if bufferize_bufnr > 0
-    let existing_lines = getbufline(bufferize_bufnr, 1, '$')
-    " There's an existing buffer, save the cursor position, but clear it out
-    let saved_view = winsaveview()
-    if line('.') == line('$')
-      " it was the last line, so let's follow it
-      let cursor_at_last_line = 1
-    endif
+  try
+    if bufferize_bufnr > 0
+      let existing_lines = getbufline(bufferize_bufnr, 1, '$')
+      " There's an existing buffer, save the cursor position, but clear it out
+      let saved_view = winsaveview()
+      if line('.') == line('$')
+        " it was the last line, so let's follow it
+        let cursor_at_last_line = 1
+      endif
 
-    let bufinfo = getbufinfo(bufferize_bufnr)
-    if len(bufinfo) >= 1 && bufinfo[0].hidden
-      " exists, but is hidden, we need to make space for it and unhide it
+      let bufinfo = getbufinfo(bufferize_bufnr)
+      if len(bufinfo) >= 1 && bufinfo[0].hidden
+        " exists, but is hidden, we need to make space for it and unhide it
+        execute g:bufferize_command
+        exe bufferize_bufnr.'buffer'
+      else
+        " we can switch to it
+        exe bufwinnr(bufferize_bufnr).'wincmd w'
+      endif
+    else
+      " Create a new buffer
       execute g:bufferize_command
-      exe bufferize_bufnr.'buffer'
-    else
-      " we can switch to it
-      exe bufwinnr(bufferize_bufnr).'wincmd w'
-    endif
-  else
-    " Create a new buffer
-    execute g:bufferize_command
-    setlocal nowrap
-    setlocal nonumber
-    setlocal noswapfile
-    setlocal buftype=nofile
+      setlocal nowrap
+      setlocal nonumber
+      setlocal noswapfile
+      setlocal buftype=nofile
 
-    if g:bufferize_keep_buffers
-      setlocal bufhidden=hide
-    else
-      setlocal bufhidden=delete
+      if g:bufferize_keep_buffers
+        setlocal bufhidden=hide
+      else
+        setlocal bufhidden=delete
+      endif
+
+      exe 'file Bufferize:\ '.escape(a:cmd, ' |\"')
+      let saved_view = winsaveview()
     endif
 
-    exe 'file Bufferize:\ '.escape(a:cmd, ' |\"')
-    let saved_view = winsaveview()
-  endif
+    " Fill the buffer with the command's output, if the contents have changed
+    let output_lines = split(output, "\n")
 
-  " Fill the buffer with the command's output, if the contents have changed
-  let output_lines = split(output, "\n")
+    if existing_lines == output_lines
+      " No change, let's not touch it
+      return
+    endif
 
-  if existing_lines == output_lines
-    " No change, let's not touch it
-    return
-  endif
-
-  silent normal! gg0"_dG
-  call setline(1, output_lines)
-  set nomodified
-  call winrestview(saved_view)
-  if cursor_at_last_line
-    silent normal! G
-  endif
-  set filetype=bufferize
-  let b:bufferize_source_command = a:cmd
-  exe bufwinnr(current_buffer).'wincmd w'
+    silent normal! gg0"_dG
+    call setline(1, output_lines)
+    set nomodified
+    call winrestview(saved_view)
+    if cursor_at_last_line
+      silent normal! G
+    endif
+    set filetype=bufferize
+    let b:bufferize_source_command = a:cmd
+  finally
+    if bufnr('%') != current_buffer
+      exe bufwinnr(current_buffer).'wincmd w'
+    endif
+  endtry
 endfunction
 
 function! bufferize#RunWithTimer(args)
