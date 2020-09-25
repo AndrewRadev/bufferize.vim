@@ -43,7 +43,7 @@ function! bufferize#Run(cmd)
       if g:bufferize_keep_buffers
         setlocal bufhidden=hide
       else
-        setlocal bufhidden=delete
+        setlocal bufhidden=wipe
       endif
 
       exe 'file Bufferize:\ '.escape(a:cmd, ' |\"')
