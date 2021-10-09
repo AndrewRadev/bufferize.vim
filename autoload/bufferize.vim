@@ -1,6 +1,7 @@
-function! bufferize#Run(cmd)
+function! bufferize#Run(cmd, mods)
   let existing_lines = []
   let output = ''
+  let new_window_command = a:mods . ' ' . g:bufferize_command
 
   " Execute the command and get its output
   let cmd = a:cmd
@@ -26,7 +27,7 @@ function! bufferize#Run(cmd)
       let bufinfo = getbufinfo(bufferize_bufnr)
       if len(bufinfo) >= 1 && bufinfo[0].hidden
         " exists, but is hidden, we need to make space for it and unhide it
-        execute g:bufferize_command
+        execute new_window_command
         exe bufferize_bufnr.'buffer'
       else
         " we can switch to it
@@ -34,7 +35,7 @@ function! bufferize#Run(cmd)
       endif
     else
       " Create a new buffer
-      execute g:bufferize_command
+      execute new_window_command
       setlocal nowrap
       setlocal nonumber
       setlocal noswapfile
@@ -74,7 +75,7 @@ function! bufferize#Run(cmd)
   endtry
 endfunction
 
-function! bufferize#RunWithTimer(args)
+function! bufferize#RunWithTimer(args, mods)
   if !has('timers') || !has('lambda')
     echohl WarningMsg |
           \ echomsg "BufferizeTimer can only be used with a Vim that has +timers and +lambda" |
@@ -89,14 +90,15 @@ function! bufferize#RunWithTimer(args)
 
   let interval = str2nr(matchstr(a:args, '^\d\+\ze'))
   let command  = matchstr(a:args, '^\d\+\s*\zs.*')
+  let mods = a:mods
 
   if bufferize#Bufnr(command)
     " already set, ignore it
     return
   endif
 
-  silent call bufferize#Run(command)
-  call s:SetBufferUpdater(bufferize#Bufnr(command), {-> bufferize#Run(command)}, interval)
+  silent call bufferize#Run(command, mods)
+  call s:SetBufferUpdater(bufferize#Bufnr(command), {-> bufferize#Run(command, mods)}, interval)
 endfunction
 
 function! bufferize#Bufnr(command)

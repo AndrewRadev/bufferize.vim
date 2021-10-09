@@ -107,8 +107,13 @@ SETTINGS                                                    *bufferize-settings*
 Default value: "new"
 
 The command to use when opening a new bufferize buffer. By default, the plugin
-opens a split with "new", but you can also use, for instance, "tabnew" to open
-it in a new tab, or add modifiers like |:rightbelow| or |:vertical|.
+opens a split with "new", but you can also use, for instance, "tabnew" to
+always open it in a new tab, or add modifiers like |:rightbelow| or
+|:vertical|. You can also run the command with those modifiers and they will
+be passed along, for example:
+>
+    vertical botright Bufferize ls
+<
 
 
                                                       *g:bufferize_keep_buffers*
