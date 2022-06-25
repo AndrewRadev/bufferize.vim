@@ -69,7 +69,7 @@ function! bufferize#Run(cmd, mods)
     set filetype=bufferize
     let b:bufferize_source_command = a:cmd
   finally
-    if bufnr('%') != current_buffer
+    if !g:bufferize_focus_output && bufnr('%') != current_buffer
       exe bufwinnr(current_buffer).'wincmd w'
     endif
   endtry
